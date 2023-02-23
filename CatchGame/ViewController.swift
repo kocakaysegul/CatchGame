@@ -8,8 +8,13 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    
 
+    //variables
     var score = 0
+    var timer = Timer()
+    var counter = 0
     
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
@@ -61,11 +66,39 @@ class ViewController: UIViewController {
         kenny7.addGestureRecognizer(recognizer7)
         kenny8.addGestureRecognizer(recognizer8)
         kenny9.addGestureRecognizer(recognizer9)
+        
+        
+        //Timers
+        counter = 10
+        timeLabel.text = "\(counter)"
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDown), userInfo: nil, repeats: true)
     }
     
     @objc func increaseScore(){
         score += 1
         scoreLabel.text = "Score: \(score)"
+    }
+    
+    @objc func countDown(){
+        counter -= 1
+        timeLabel.text = "\(counter)"
+        
+        if counter == 0 {
+            timer.invalidate()
+            
+            //Alert
+            let alert = UIAlertController(title: "Time's up!", message: "Do you want to play again?", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel)
+            let replayButoon  = UIAlertAction(title: "Replay", style: UIAlertAction.Style.default) { UIAlertAction in
+                //Replay function
+            }
+            
+            alert.addAction(okButton)
+            alert.addAction(replayButoon)
+            self.present(alert, animated: true)
+            
+        }
+        
     }
 
 
